@@ -1,8 +1,8 @@
 import { defineConfig, env } from "prisma/config";
 
-const sanitizeDatabaseUrl = (rawUrl: string) => {
+const sanitizeDatabaseUrl = (rawUrl?: string) => {
   if (!rawUrl) {
-    return rawUrl;
+    return "postgresql://dummy:dummy@localhost:5432/dummy";
   }
 
   try {
@@ -26,6 +26,6 @@ export default defineConfig({
   },
   engine: "classic",
   datasource: {
-    url: sanitizeDatabaseUrl(env("DATABASE_URL")),
+    url: sanitizeDatabaseUrl(process.env.DATABASE_URL),
   },
 });
