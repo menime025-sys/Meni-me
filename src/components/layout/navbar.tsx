@@ -182,28 +182,6 @@ const menuItems: MenuItem[] = [
     ],
   },
   {
-    label: "BLOG",
-    href: "#",
-    type: "simple",
-    sublinks: [
-      { label: "THE TIMELESS ORIGINALS: STYLING 501®S FOR WOMEN", href: "#" },
-      { label: "LEVI'S ESSENTIALS: THE BASICS TO BUILD A CLASSIC WARDROBE", href: "#" },
-      { label: "DENIM DONE RIGHT: STYLING YOUR 501®S FOR HIM", href: "#" },
-      { label: "EXPLORE THE HOTTEST STYLES IN WOMEN'S JEANS THAT ARE BOUND TO MAKE YOU STAND OUT.", href: "#" },
-      { label: "TAPERED JEANS FOR HIM: FOR EVERY STYLE", href: "#" },
-      { label: "THE ULTIMATE SUMMER VACATION STYLE GUIDE", href: "#" },
-      { label: "STYLING YOUR BAGGY FIT JEANS: FOR HER & HIM", href: "#" },
-      { label: "MEN X JEANS", href: "#" },
-      { label: "LEVI'S® 101: A QUICK GUIDE TO STYLING YOUR JEANS", href: "#" },
-      { label: "FROM WASH TO WEAR: HOW TO MAKE YOUR FAVORITE DENIM LAST LONGER", href: "#" },
-      { label: "LEVI'S JEANS: FIND YOUR PERFECT FIT", href: "#" },
-      { label: "BACK TO SCHOOL STAPLES: A QUICK GUIDE", href: "#" },
-      { label: "CAPSULE WARDROBE: WHAT IT IS & HOW TO BUILD ONE", href: "#" },
-      { label: "DENIM UPDATE: THE FRESHEST FITS", href: "#" },
-      { label: "LIVE IN LEVI'S", href: "#" },
-    ],
-  },
-  {
     label: "FEATURED COLLECTIONS",
     href: "#",
     type: "simple",
@@ -630,6 +608,15 @@ export const Navbar = ({ initialCartCount, initialWishlistCount }: NavbarProps) 
             ) : null}
           </Link>
 
+          {isAdmin ? (
+            <Link
+              href="/admin/dashboard"
+              className="hidden lg:inline-flex items-center gap-2 rounded-full bg-gray-900 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-white transition hover:bg-gray-800"
+            >
+              Dashboard
+            </Link>
+          ) : null}
+
           <div className="relative">
             <button
               ref={userMenuButtonRef}
@@ -753,6 +740,15 @@ export const Navbar = ({ initialCartCount, initialWishlistCount }: NavbarProps) 
               />
             </div>
             <div className="mt-4 space-y-2 text-sm text-gray-600">
+              {isAdmin ? (
+                <Link
+                  href="/admin/dashboard"
+                  className="block rounded-full bg-gray-900 px-4 py-2 text-center text-xs font-semibold uppercase tracking-[0.3em] text-white transition hover:bg-gray-800"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Dashboard
+                </Link>
+              ) : null}
               {user ? (
                 <button
                   type="button"
