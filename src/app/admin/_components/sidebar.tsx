@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ADMIN_NAV_LINKS } from "../_constants/nav-links";
@@ -10,10 +11,22 @@ const Sidebar = () => {
 
   return (
   <aside className="hidden h-screen w-64 shrink-0 border-r border-slate-200 bg-white/80 backdrop-blur lg:sticky lg:top-0 lg:block">
-      <div className="flex h-16 items-center border-b border-slate-200 px-6 text-lg font-semibold uppercase tracking-[0.4em] text-slate-900">
-        Hub
-        <span className="text-red-600">F</span>
-        <span className="ml-1 text-[0.6rem] font-medium tracking-[0.5em] text-slate-500">Admin</span>
+      <div className="flex h-16 items-center gap-3 border-b border-slate-200 px-6">
+        <Link href="/admin" className="flex items-center gap-3">
+          <span className="relative flex h-11 w-11 items-center justify-center ">
+            <Image
+              src="/menime-logo.png"
+              alt="Meni-me logo"
+              width={60}
+              height={60}
+              priority
+            />
+          </span>
+          <div className="leading-tight">
+            <p className="text-xs font-semibold uppercase tracking-[0.4em] text-slate-500">Meni-me</p>
+            <p className="text-lg font-semibold uppercase tracking-[0.6em] text-slate-900">Admin</p>
+          </div>
+        </Link>
       </div>
       <nav className="flex h-[calc(100%-4rem)] flex-col gap-1 overflow-y-auto p-4">
         {ADMIN_NAV_LINKS.map((link) => {

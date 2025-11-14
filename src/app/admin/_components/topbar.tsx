@@ -1,12 +1,30 @@
 "use client";
 
-import { Menu, Search, UserCircle } from "lucide-react";
+import { Menu, Search, UserCircle, Home, LogOut } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useMemo, useRef, useState, useTransition } from "react";
+
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { signOut, useSession } from "@/lib/auth-client";
 import { ADMIN_NAV_LINKS } from "../_constants/nav-links";
-import { usePathname } from "next/navigation";
-import Link from "next/link";
-import { useState } from "react";
+
+const getInitials = (name?: string | null, fallback?: string | null) => {
+  if (name && name.trim().length > 0) {
+    const tokens = name.trim().split(/\s+/);
+    const first = tokens[0]?.[0] ?? "";
+    const second = tokens.length > 1 ? tokens[tokens.length - 1]?.[0] ?? "" : "";
+    return (first + second).toUpperCase();
+  }
+
+  if (fallback && fallback.length > 0) {
+    return fallback[0]?.toUpperCase() ?? "";
+  }
+
+  return "";
+};
 
 const MobileSidebar = () => {
   const [open, setOpen] = useState(false);
@@ -55,6 +73,54 @@ const MobileSidebar = () => {
 
 const Topbar = () => {
   const pathname = usePathname();
+  const router = useRouter();
+  const { data: session } = useSession();
+  const user = session?.user;
+
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [isSigningOut, startSignOut] = useTransition();
+
+  const userMenuRef = useRef<HTMLDivElement | null>(null);
+  const userMenuButtonRef = useRef<HTMLButtonElement | null>(null);
+
+  const userInitials = useMemo(() => getInitials(user?.name, user?.email), [user?.name, user?.email]);
+  const userAvatar = useMemo(() => {
+    if (!user || typeof user.image !== "string") {
+      return null;
+    }
+    const trimmed = user.image.trim();
+    return trimmed.length > 0 ? trimmed : null;
+  }, [user]);
+
+  useEffect(() => {
+    if (!isUserMenuOpen) {
+      return;
+    }
+
+    const handleClick = (event: MouseEvent) => {
+      const target = event.target as Node | null;
+      if (!target) {
+        return;
+      }
+      if (userMenuRef.current?.contains(target) || userMenuButtonRef.current?.contains(target)) {
+        return;
+      }
+      setIsUserMenuOpen(false);
+    };
+
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, [isUserMenuOpen]);
+
+  const handleSignOut = () => {
+    startSignOut(async () => {
+      await signOut();
+      setIsUserMenuOpen(false);
+      router.push("/");
+      router.refresh();
+    });
+  };
+
   const activeTitle =
     ADMIN_NAV_LINKS.find((link) => pathname?.startsWith(link.href))?.label ??
     "Overview";
@@ -78,14 +144,67 @@ const Topbar = () => {
         <Button variant="outline" className="hidden rounded-full lg:inline-flex">
           Quick actions
         </Button>
-        <Button
-          variant="ghost"
-          size="icon"
-          className="rounded-full border border-slate-200"
-          aria-label="Open profile"
-        >
-          <UserCircle className="h-6 w-6 text-slate-600" />
-        </Button>
+        <div className="relative">
+          <button
+            ref={userMenuButtonRef}
+            type="button"
+            onClick={() => setIsUserMenuOpen((prev) => !prev)}
+            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 transition hover:border-slate-300"
+            aria-label="Open account menu"
+          >
+            {user ? (
+              userAvatar ? (
+                <span className="relative h-9 w-9 overflow-hidden rounded-full border border-slate-200">
+                  <Image
+                    src={userAvatar}
+                    alt={user.name ?? user.email ?? "User avatar"}
+                    fill
+                    sizes="36px"
+                    className="object-cover"
+                    priority
+                  />
+                </span>
+              ) : (
+                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-slate-900 text-xs font-semibold uppercase tracking-[0.3em] text-white">
+                  {userInitials || <UserCircle className="h-5 w-5" />}
+                </span>
+              )
+            ) : (
+              <UserCircle className="h-6 w-6 text-slate-600" />
+            )}
+          </button>
+
+          {isUserMenuOpen ? (
+            <div
+              ref={userMenuRef}
+              className="absolute right-0 top-full mt-3 w-64 rounded-2xl border border-slate-200 bg-white/95 p-3 shadow-xl backdrop-blur"
+            >
+              <div className="rounded-xl bg-slate-50 p-3 text-sm">
+                <p className="text-xs uppercase tracking-[0.35em] text-slate-500">Signed in as</p>
+                <p className="mt-1 font-semibold text-slate-900">{user?.name ?? user?.email ?? "Admin"}</p>
+              </div>
+              <div className="mt-3 space-y-1 text-sm">
+                <Link
+                  href="/"
+                  className="flex items-center gap-2 rounded-lg px-3 py-2 text-slate-700 transition hover:bg-slate-100"
+                  onClick={() => setIsUserMenuOpen(false)}
+                >
+                  <Home className="h-4 w-4" />
+                  Go to storefront
+                </Link>
+                <button
+                  type="button"
+                  onClick={handleSignOut}
+                  className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-slate-700 transition hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-60"
+                  disabled={isSigningOut}
+                >
+                  <LogOut className="h-4 w-4" />
+                  {isSigningOut ? "Signing out…" : "Log out"}
+                </button>
+              </div>
+            </div>
+          ) : null}
+        </div>
       </div>
     </header>
   );
