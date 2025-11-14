@@ -4,15 +4,7 @@ import { useEffect, useMemo, useRef, useState, useTransition } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import {
-  ChevronDown,
-  Heart,
-  Menu,
-  Search,
-  ShoppingBag,
-  User,
-  X,
-} from "lucide-react";
+import { Heart, Menu, Search, ShoppingBag, User, X } from "lucide-react";
 
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 
@@ -237,7 +229,7 @@ export const Navbar = ({ initialCartCount, initialWishlistCount }: NavbarProps) 
   const userMenuRef = useRef<HTMLDivElement | null>(null);
   const userMenuButtonRef = useRef<HTMLButtonElement | null>(null);
 
-  const { data: session, isPending: isSessionPending } = useSession();
+  const { data: session } = useSession();
   const user = session?.user;
 
   // Check if user has admin role - better-auth includes custom fields in session
@@ -467,7 +459,7 @@ export const Navbar = ({ initialCartCount, initialWishlistCount }: NavbarProps) 
         >
           Cart
         </Link>
-        {/* {isAdmin ? (
+        {isAdmin ? (
           <Link
             href="/admin/dashboard"
             className="rounded-lg px-3 py-2 text-gray-700 transition hover:bg-gray-100"
@@ -475,7 +467,7 @@ export const Navbar = ({ initialCartCount, initialWishlistCount }: NavbarProps) 
           >
             Admin dashboard
           </Link>
-        ) : null} */}
+        ) : null}
         <button
           type="button"
           onClick={handleSignOut}
@@ -491,17 +483,32 @@ export const Navbar = ({ initialCartCount, initialWishlistCount }: NavbarProps) 
   return (
     <header className="sticky top-0 left-0 right-0 z-50 w-full border-b border-gray-200 bg-white shadow-sm">
 
-  <nav className="flex items-center justify-between px-4 py-4 lg:h-20 lg:px-8">
-  <Link href="/" className="flex shrink-0 items-center gap-3" aria-label="Meni-me home">
-          <span className="relative flex h-10 w-10 items-center justify-center overflow-hidden bg-transparent m">
-            <Image src="/menime-logo.png" alt="Meni-me logo" fill sizes="40px" className="object-contain" />
-          </span>
-          <span className="hidden text-lg font-semibold tracking-[0.2em] text-gray-900 sm:inline">
-            Meni-me
-          </span>
-        </Link>
+      <nav className="flex flex-wrap items-center gap-4 px-4 py-4 lg:h-20 lg:flex-nowrap lg:gap-8 lg:px-8">
+        <div className="flex w-full items-center justify-between lg:w-auto">
+          <Link
+            href="/"
+            className="flex flex-col items-center justify-center text-center"
+            aria-label="Meni-me home"
+          >
+            <span className="relative flex h-6 w-16 items-center justify-center overflow-hidden bg-white">
+              <Image src="/menime-logo.png" alt="Meni-me logo" fill sizes="96px" className="object-contain" />
+            </span>
+            <span className="text-xs font-semibold uppercase tracking-[0.35em] text-gray-900 sm:text-sm">
+              Meni-me
+            </span>
+          </Link>
 
-        <div className="hidden flex-1 items-center justify-center gap-8 lg:flex">
+          <button
+            type="button"
+            onClick={toggleMenu}
+            className="inline-flex items-center justify-center rounded-full border border-gray-200 p-2 transition-colors duration-200 hover:border-gray-400 hover:text-red-600 lg:hidden"
+            aria-label="Toggle menu"
+          >
+            {isMenuOpen ? <X size={24} className="text-gray-900" /> : <Menu size={24} className="text-gray-900" />}
+          </button>
+        </div>
+
+        <div className="order-3 hidden w-full lg:order-2 lg:flex lg:flex-1 lg:items-center lg:justify-center lg:gap-8">
           {menuItems.map((item) => (
             <div
               key={item.label}
@@ -589,7 +596,7 @@ export const Navbar = ({ initialCartCount, initialWishlistCount }: NavbarProps) 
           ))}
         </div>
 
-        <div className="flex items-center gap-4 lg:gap-6">
+        <div className="order-2 flex w-full items-center justify-end gap-3 lg:order-3 lg:w-auto lg:gap-6">
           <div className="hidden items-center gap-2 border-b border-gray-300 px-2 py-1 text-xs text-gray-600 transition-colors duration-200 hover:border-gray-400 focus-within:border-gray-600 md:flex">
             <Search size={18} className="text-gray-500" />
             <input
@@ -616,48 +623,37 @@ export const Navbar = ({ initialCartCount, initialWishlistCount }: NavbarProps) 
               </span>
             ) : null}
           </Link>
-
-          {isAdmin ? (
-            <Link
-              href="/admin/dashboard"
-              className="hidden lg:inline-flex items-center gap-2 rounded-full bg-gray-900 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-white transition hover:bg-gray-800"
-            >
-              Dashboard
-            </Link>
-          ) : null}
-
           <div className="relative">
             <button
               ref={userMenuButtonRef}
               type="button"
               onClick={handleToggleUserMenu}
-              className="inline-flex items-center gap-2 rounded-full border border-gray-200 px-3 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-gray-700 transition hover:bg-gray-100"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-700 transition hover:border-gray-400 hover:bg-gray-50"
             >
+              <span className="sr-only">{user ? "Open account menu" : "Open login menu"}</span>
               {user ? (
                 userAvatar ? (
-                  <span className="relative flex h-7 w-7 overflow-hidden rounded-full border border-gray-200 bg-gray-100">
+                  <span className="relative flex h-8 w-8 overflow-hidden rounded-full border border-gray-200 bg-gray-100">
                     <Image
                       src={userAvatar}
                       alt={user.name ?? user.email ?? "User avatar"}
-                      width={28}
-                      height={28}
-                      sizes="28px"
+                      width={32}
+                      height={32}
+                      sizes="32px"
                       className="h-full w-full object-cover"
                       priority
                     />
                   </span>
                 ) : (
-                  <span className="flex h-7 w-7 items-center justify-center rounded-full bg-gray-900 text-[11px] font-semibold uppercase tracking-widest text-white">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-900 text-[11px] font-semibold uppercase tracking-widest text-white">
                     {userInitials || <User className="h-4 w-4" />}
                   </span>
                 )
               ) : (
-                <User className="h-4 w-4" />
+                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-gray-900/10 text-gray-900">
+                  <User className="h-4 w-4" />
+                </span>
               )}
-              <span className="hidden sm:inline">
-                {isSessionPending ? "Loading" : user ? "Account" : "Login"}
-              </span>
-              <ChevronDown className="h-4 w-4 text-gray-400" />
             </button>
 
             {isUserMenuOpen ? (
@@ -669,15 +665,6 @@ export const Navbar = ({ initialCartCount, initialWishlistCount }: NavbarProps) 
               </div>
             ) : null}
           </div>
-
-          <button
-            type="button"
-            onClick={toggleMenu}
-            className="p-2 transition-colors duration-200 hover:text-red-600 lg:hidden"
-            aria-label="Toggle menu"
-          >
-            {isMenuOpen ? <X size={24} className="text-gray-900" /> : <Menu size={24} className="text-gray-900" />}
-          </button>
         </div>
       </nav>
 
