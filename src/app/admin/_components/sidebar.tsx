@@ -9,13 +9,13 @@ const Sidebar = () => {
   const pathname = usePathname();
 
   return (
-    <aside className="hidden w-64 shrink-0 border-r border-slate-200 bg-white/80 backdrop-blur lg:block">
+    <aside className="hidden h-screen w-64 shrink-0 border-r border-slate-200 bg-white/80 backdrop-blur lg:block">
       <div className="flex h-16 items-center border-b border-slate-200 px-6 text-lg font-semibold uppercase tracking-[0.4em] text-slate-900">
         Hub
         <span className="text-red-600">F</span>
         <span className="ml-1 text-[0.6rem] font-medium tracking-[0.5em] text-slate-500">Admin</span>
       </div>
-      <nav className="flex flex-col gap-1 p-4">
+      <nav className="flex h-[calc(100%-4rem)] flex-col gap-1 overflow-y-auto p-4">
         {ADMIN_NAV_LINKS.map((link) => {
           const Icon = link.icon;
           const isActive = pathname?.startsWith(link.href);
