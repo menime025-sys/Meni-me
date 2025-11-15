@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { QueryProvider } from "@/components/providers/query-provider";
-import { GlobalLoaderProvider } from "@/components/providers/global-loader-provider";
 import Navbar from "@/components/layout/navbar";
 import { getCurrentUser } from "@/lib/auth-helpers";
 import { getUserCommerceCounts } from "@/server/storefront-service";
@@ -52,7 +51,6 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <QueryProvider>
-          <GlobalLoaderProvider>
             <div className="flex min-h-screen flex-col bg-white">
               <Navbar
                 initialCartCount={initialCartCount}
@@ -60,7 +58,6 @@ export default async function RootLayout({
               />
               <main className="flex-1">{children}</main>
             </div>
-          </GlobalLoaderProvider>
         </QueryProvider>
       </body>
     </html>
