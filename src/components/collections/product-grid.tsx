@@ -64,13 +64,13 @@ export function ProductGrid({ products }: ProductGridProps) {
 
         return (
           <Link key={product.id} href={`/products/${product.slug}`} className="group cursor-pointer" prefetch={false}>
-            <div className="relative mb-3 bg-gray-100 rounded-lg overflow-hidden aspect-square">
+            <div className="relative mb-3 bg-gray-100 rounded-lg overflow-hidden aspect-3/4 md:aspect-2/3">
               {product.image ? (
                 <Image
                   src={product.image}
                   alt={product.title}
                   fill
-                  sizes="(max-width: 640px) 48vw, (max-width: 1024px) 30vw, 20vw"
+                  sizes="(max-width: 640px) 48vw, (max-width: 1024px) 50vw, 50vw"
                   className="object-cover transition duration-300 group-hover:scale-105"
                 />
               ) : (

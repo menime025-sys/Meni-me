@@ -20,204 +20,15 @@ import {
   SheetContent,
   SheetHeader,
   SheetTitle,
+  SheetDescription,
   SheetClose,
 } from "@/components/ui/sheet";
 
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { signOut, useSession } from "@/lib/auth-client";
+import { MENUITEMS } from "@/app/admin/_constants/nav-links";
 
-type MenuSublink = {
-  label: string;
-  href: string;
-};
-
-type MegaMenuColumn = {
-  title: string;
-  links: string[];
-};
-
-type MenuItem =
-  | {
-      label: string;
-      href: string;
-      type: "simple";
-      sublinks?: MenuSublink[];
-      isSale?: boolean;
-    }
-  | {
-      label: string;
-      href: string;
-      type: "mega";
-      columns: MegaMenuColumn[];
-      image?: string;
-      isSale?: boolean;
-    };
-
-const MENUITEMS: MenuItem[] = [
-  {
-    label: "SALE",
-    href: "#",
-    type: "simple",
-    isSale: true,
-    sublinks: [
-      { label: "MEN", href: "/collections/sale-men" },
-      { label: "WOMEN", href: "/collections/sale-women" },
-      { label: "FOOTWEAR", href: "#" },
-      { label: "BELTS & WALLETS", href: "#" },
-    ],
-  },
-  {
-    label: "MEN",
-    href: "/men",
-    type: "mega",
-    columns: [
-      {
-        title: "CLOTHING",
-        links: [
-          "Jeans",
-          "Chinos & Pants",
-          "T-Shirts",
-          "Shirts",
-          "Polos",
-          "Shorts",
-          "Cargo",
-          "Jackets",
-          "Sweaters",
-          "Sweatshirts",
-          "Must Have",
-        ],
-      },
-      {
-        title: "SHOP JEANS BY FIT",
-        links: [
-          "Baggy",
-          "Loose",
-          "Relaxed",
-          "Straight",
-          "Slim",
-          "Skinny",
-          "Bootcut",
-        ],
-      },
-      {
-        title: "JEANS BY STYLE",
-        links: [
-          "568™ Loose Fit",
-          "578™ Baggy Fit",
-          "555™ Relaxed Fit",
-          "501® Original Straight Fit",
-          "511™ Slim Fit",
-          "512™ Slim Tapered",
-          "513™ Slim Straight",
-          "550™ Relaxed Fit",
-          "505™ Straight Fit",
-          "541™ Athletic Tapered Fit",
-        ],
-      },
-      {
-        title: "T-SHIRTS & SHIRTS",
-        links: [
-          "T-Shirts",
-          "Oversized T-Shirts",
-          "Shirts",
-          "Polo Shirts",
-          "Linen Shirts",
-          "Oxford Shirts",
-          "Denim Shirts",
-          "Striped Shirts",
-          "Corduroy Shirts",
-        ],
-      },
-      {
-        title: "FOOTWEAR & ACCESSORIES",
-        links: ["Belts", "Casual Shoes", "Wallets"],
-      },
-    ],
-    image: "/men-denim-fashion.jpg",
-  },
-  {
-    label: "WOMEN",
-    href: "/women",
-    type: "mega",
-    columns: [
-      {
-        title: "CLOTHING",
-        links: [
-          "Jeans",
-          "T-Shirts",
-          "Tops",
-          "Shirts",
-          "Jackets",
-          "Shorts",
-          "Dresses",
-          "Skirts",
-          "Pants & Trousers",
-          "Joggers",
-          "Jumpsuits",
-          "Corset Tops",
-          "Sweatshirts",
-          "Sweaters",
-          "Must Have",
-        ],
-      },
-      {
-        title: "SHOP JEANS BY FIT",
-        links: [
-          "Baggy",
-          "Skinny",
-          "Flare",
-          "Loose",
-          "Straight",
-          "High Rise",
-          "Wide Leg",
-        ],
-      },
-      {
-        title: "JEANS BY STYLE",
-        links: [
-          "725™ High Rise Bootcut",
-          "Ribcage Straight",
-          "311™ Shaping Skinny",
-          "312™ Shaping Slim",
-          "501® Original",
-          "710™ Super Skinny",
-          "711™ Skinny",
-          "715™ Bootcut",
-          "721™ High Rise Skinny",
-          "724™ High Rise Straight",
-        ],
-      },
-      {
-        title: "FOOTWEAR & ACCESSORIES",
-        links: ["Slip-Ons", "Hats", "Casual Shoes", "Wallets"],
-      },
-    ],
-    image: "/women-denim-fashion.jpg",
-  },
-  {
-    label: "NEW ARRIVALS",
-    href: "/new-arrivals",
-    type: "simple",
-    sublinks: [
-      { label: "EASY IN LEVI'S LOOSE FITS", href: "#" },
-      { label: "MEN", href: "#" },
-      { label: "WOMEN", href: "#" },
-      { label: "ONLINE EXCLUSIVE", href: "#" },
-    ],
-  },
-  {
-    label: "FEATURED COLLECTIONS",
-    href: "/featured-collections",
-    type: "simple",
-    sublinks: [
-      { label: "WINTER EDITS", href: "#" },
-      { label: "PREMIUM COLLECTION", href: "#" },
-      { label: "PERFORMANCE ESSENTIALS", href: "#" },
-      { label: "EASY IN LEVI'S", href: "#" },
-    ],
-  },
-];
 
 type NavbarProps = {
   initialCartCount?: number;
@@ -599,6 +410,10 @@ export const Navbar = ({
             className="w-[70%] max-w-sm p-0 flex flex-col overflow-hidden"
           >
             <SheetHeader className="border-b border-gray-200 px-4 py-4 ">
+              <SheetTitle className="sr-only">Site navigation menu</SheetTitle>
+              <SheetDescription className="sr-only">
+                Browse product categories, account links, and quick actions.
+              </SheetDescription>
               <div className="flex items-center justify-between">
                 <div className="flex flex-col items-center gap-0">
                   <div className="relative h-8 w-12">
@@ -608,7 +423,6 @@ export const Navbar = ({
                       fill
                       sizes="48px"
                       className="object-contain"
-                      priority
                     />
                   </div>
                   <span className="text-[10px] font-bold text-gray-900 uppercase tracking-[0.15em]">
@@ -933,8 +747,8 @@ export const Navbar = ({
 
       {/* The previous implementation of the mobile menu is removed */}
 
-  {/* Medium & Desktop Navigation (≥ 768px) */}
-  <nav className="hidden md:block border-b border-gray-200 relative">
+      {/* Medium & Desktop Navigation (≥ 768px) */}
+      <nav className="hidden md:block border-b border-gray-200 relative">
         <div className="flex items-start justify-between gap-4 lg:gap-8 px-4 md:px-6 lg:px-8 py-4">
           {/* Logo with Company Name */}
           <Link

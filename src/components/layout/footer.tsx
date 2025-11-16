@@ -1,6 +1,6 @@
 "use client";
 
-import { Facebook, Instagram, Twitter, ChevronDown } from "lucide-react";
+import { Facebook, Instagram, Twitter, ChevronDown, Youtube } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
@@ -46,7 +46,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="bg-white">
+    <footer className="bg-gray-100">
 
       {/* Mobile and Tablet Footer */}
       <div className="md:hidden px-4 py-6 space-y-0">
@@ -118,8 +118,8 @@ export default function Footer() {
       </div>
 
       {/* Desktop and Tablet Footer (md+) */}
-      <div className="hidden md:block max-w-7xl mx-auto px-4 md:px-8 py-8 md:py-16">
-        <details className="group border-b border-gray-200 pb-4 mb-8">
+      <div className="hidden md:block max-w-7xl mx-auto md:py-2 md:px-4">
+        <details className="group border-b border-gray-200 pb-1">
           <summary className="flex items-center justify-between cursor-pointer py-4 select-none">
             <h3 className="text-sm font-bold uppercase tracking-[0.3em] text-gray-900">More About Levi&rsquo;s India Store</h3>
             <ChevronDown className="w-5 h-5 text-gray-600 group-open:rotate-180 transition-transform" />
@@ -129,122 +129,167 @@ export default function Footer() {
           </p>
         </details>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-          {/* Quick Links */}
+        <div className="">
+      {/* Main Footer Content */}
+      <div className="max-w-7xl mx-auto md:py-4 border-b border-gray-300">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+          {/* Quick Links Section */}
           <div>
-            <h4 className="text-xs font-bold uppercase tracking-[0.35em] text-gray-900 mb-6">Quick Links</h4>
-            <ul className="space-y-3">
-              {["Men's Jeans", "Women's Jeans", "Men's T-Shirts", "Women's Tops", "Belts & Wallets", "Footwear", "Men's Jackets", "Red Tab Member Program", "Store Locator"].map((link) => (
-                <li key={link}>
-                  <Link href="#" className="text-sm text-gray-600 hover:text-gray-900 transition">
-                    {link}
+            <h3 className="text-sm font-bold text-black mb-2 uppercase tracking-wide">
+              Quick Links
+            </h3>
+            <ul className="space-y-1">
+              {['Men\'s Jeans', 'Women\'s Jeans', 'Men\'s T-shirts', 'Women\'s Tops', 'Belts & Wallets', 'Footwear', 'Men\'s Jackets', 'Red Tab Member Program', 'Store Locator'].map((item) => (
+                <li key={item}>
+                  <Link
+                    href="#"
+                    className="text-sm text-gray-600 hover:text-black transition-colors"
+                  >
+                    {item}
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Support */}
+          {/* Support Section */}
           <div>
-            <h4 className="text-xs font-bold uppercase tracking-[0.35em] text-gray-900 mb-6">Support</h4>
-            <ul className="space-y-3">
-              {["Help", "Returns & Exchanges", "Shipping", "About Us"].map((link) => (
-                <li key={link}>
-                  <Link href="#" className="text-sm text-gray-600 hover:text-gray-900 transition">
-                    {link}
+            <h3 className="text-sm font-bold text-black mb-2 uppercase tracking-wide">
+              Support
+            </h3>
+            <ul className="space-y-1">
+              {[
+                { label: 'Help', href: '#' },
+                { label: 'Returns & Exchanges', href: '#' },
+                { label: 'Shipping', href: '#' },
+                { label: 'About Us', href: '#' },
+              ].map((item) => (
+                <li key={item.label}>
+                  <Link
+                    href={item.href}
+                    className="text-sm text-gray-600 hover:text-black transition-colors"
+                  >
+                    {item.label}
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Perks Section */}
+          {/* Contact Section */}
           <div>
-            <h4 className="text-xs font-bold uppercase tracking-[0.35em] text-gray-900 mb-6">Its All About The Perks</h4>
-            <div className="space-y-4">
+            <h3 className="text-sm font-bold text-black mb-2 uppercase tracking-wide">
+              Contact
+            </h3>
+            <div className="space-y-2">
               <div>
-                <input
-                  type="email"
-                  placeholder="Email Address"
-                  className="w-full px-4 py-3 border-b border-gray-300 text-sm bg-transparent outline-none placeholder-gray-400 focus:border-gray-900"
-                />
+                <p className="text-xs font-semibold text-black -mb-1">For Customer Care</p>
+                <a href="mailto:customercare@levi.in" className="text-sm text-gray-600 hover:text-black transition-colors">
+                  customercare@levi.in
+                </a>
               </div>
-              <Button className="w-full bg-gray-900 text-white hover:bg-black">
-                Subscribe
-              </Button>
+              <div>
+                <p className="text-xs font-semibold text-black -mb-1">For Order Escalation</p>
+                <a href="mailto:feedbacklevi@levi.in" className="text-sm text-gray-600 hover:text-black transition-colors">
+                  feedbacklevi@levi.in
+                </a>
+              </div>
+              <div>
+                <p className="text-xs font-semibold text-black -mb-1">For Online Orders</p>
+                <a href="tel:1800-123-5384" className="text-sm text-gray-600 hover:text-black transition-colors">
+                  1800-123-5384
+                </a>
+              </div>
+              <div>
+                <p className="text-xs font-semibold text-black -mb-1">For Store Queries</p>
+                <a href="tel:1800-1020-501" className="text-sm text-gray-600 hover:text-black transition-colors">
+                  1800-1020-501
+                </a>
+              </div>
+              <div>
+                <p className="text-xs font-semibold text-black -mb-1">Call Timings</p>
+                <p className="text-sm text-gray-600">Mon-Sat: 10AM - 6PM</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Newsletter Section */}
+          <div>
+            <h3 className="text-sm font-bold text-black mb-2 uppercase tracking-wide">
+              It's All About The Perks
+            </h3>
+            <form className="lg:space-y-4 md:space-y-2">
+              <input
+                type="email"
+                placeholder="Email Address"
+                className="w-full px-0 py-2 bg-transparent border-b border-gray-400 text-sm focus:outline-none focus:border-black transition-colors"
+              />
               <p className="text-xs text-gray-600">
-                *See <Link href="#" className="underline">Details</Link> on Terms and Conditions and <Link href="#" className="underline">Privacy Policy</Link> for our privacy practices.
+                *See <a href="#" className="underline hover:text-black">Details</a> for Terms and Conditions and See <a href="#" className="underline hover:text-black">Privacy Policy</a> for our privacy practices.
               </p>
-            </div>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12 pb-8 border-b border-gray-200">
-          <div>
-            <h4 className="text-xs font-bold uppercase tracking-[0.35em] text-gray-900 mb-6">Contact</h4>
-            <div className="space-y-4 text-sm">
-              <div>
-                <p className="font-bold text-gray-900 mb-1">For Customer care</p>
-                <Link href="mailto:customercare@levi.in" className="text-gray-600 hover:text-gray-900">customercare@levi.in</Link>
-              </div>
-              <div>
-                <p className="font-bold text-gray-900 mb-1">For Order Escalation</p>
-                <Link href="mailto:feedbacklevi@levi.in" className="text-gray-600 hover:text-gray-900">feedbacklevi@levi.in</Link>
-              </div>
-              <div>
-                <p className="font-bold text-gray-900 mb-1">For Online Orders</p>
-                <Link href="tel:1800123584" className="text-gray-600 hover:text-gray-900">1800-123-584</Link>
-              </div>
-              <div>
-                <p className="font-bold text-gray-900 mb-1">For Store Queries</p>
-                <Link href="tel:1800102501" className="text-gray-600 hover:text-gray-900">1800-1020-501</Link>
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <div>
-              <p className="font-bold text-gray-900 text-sm mb-2">Call Timings</p>
-              <p className="text-sm text-gray-600">Mon-Sat : 10AM - 6PM</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-600">
-          <p>
-            © 2025, Levis India Store
-          </p>
-
-          <div className="flex flex-wrap justify-center gap-6">
-            {[
-              { label: "Privacy Policy", href: "#" },
-              { label: "Terms of use", href: "#" },
-              { label: "Returns", href: "#" },
-              { label: "Corporate Information", href: "#" },
-            ].map((link) => (
-              <Link
-                key={link.label}
-                href={link.href}
-                className="text-gray-600 hover:text-gray-900 transition"
+              <button
+                type="submit"
+                className="w-full bg-black text-white py-3 text-sm font-semibold hover:bg-gray-900 transition-colors"
               >
-                {link.label}
-              </Link>
-            ))}
-          </div>
-
-          <div className="flex gap-4">
-            <Link href="#" className="text-gray-600 hover:text-gray-900 transition">
-              <Facebook className="w-4 h-4" />
-            </Link>
-            <Link href="#" className="text-gray-600 hover:text-gray-900 transition">
-              <Instagram className="w-4 h-4" />
-            </Link>
-            <Link href="#" className="text-gray-600 hover:text-gray-900 transition">
-              <Twitter className="w-4 h-4" />
-            </Link>
+                Subscribe
+              </button>
+            </form>
           </div>
         </div>
       </div>
+
+      {/* Bottom Footer */}
+      <div className="max-w-7xl mx-auto lg:py-2 md:pb-14 py-4">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="text-xs text-gray-600 text-center md:text-left">
+            <p>
+              © 2025, Levi's India Store
+              {' '}
+              <a href="#" className="hover:text-black underline mx-2">Privacy Policy</a>
+              <a href="#" className="hover:text-black underline mx-2">Terms of use</a>
+              <a href="#" className="hover:text-black underline mx-2">Returns</a>
+              <a href="#" className="hover:text-black underline mx-2">Corporate Information</a>
+            </p>
+          </div>
+
+          {/* Social Media Icons */}
+          <div className="flex gap-4">
+            <a
+              href="#"
+              className="text-gray-600 hover:text-black transition-colors"
+              aria-label="Pinterest"
+            >
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="1" />
+              </svg>
+            </a>
+            <a
+              href="#"
+              className="text-gray-600 hover:text-black transition-colors"
+              aria-label="Instagram"
+            >
+              <Instagram className="w-5 h-5" />
+            </a>
+            <a
+              href="#"
+              className="text-gray-600 hover:text-black transition-colors"
+              aria-label="YouTube"
+            >
+              <Youtube className="w-5 h-5" />
+            </a>
+            <a
+              href="#"
+              className="text-gray-600 hover:text-black transition-colors"
+              aria-label="Twitter"
+            >
+              <Twitter className="w-5 h-5" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+      </div>
+
     </footer>
   );
 }

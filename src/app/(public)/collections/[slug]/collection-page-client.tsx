@@ -1,13 +1,12 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import Footer from "@/components/layout/footer";
 import { FilterPanel } from "@/components/collections/filter-panel";
 import { ProductGrid, type CollectionGridProduct } from "@/components/collections/product-grid";
 import { FilterChips } from "@/components/collections/filter-chips";
 import { SortDropdown } from "@/components/collections/sort-dropdown";
 import { Settings2, Sliders, X } from "lucide-react";
-import { Sheet, SheetClose, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { Sheet, SheetClose, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import type { StorefrontCollection } from "@/lib/storefront/catalog";
 
 const FALLBACK_FEATURED_CATEGORIES = ["JEANS", "T-SHIRTS", "JACKETS", "SHIRTS", "SWEATSHIRT"];
@@ -135,13 +134,13 @@ export function CollectionPageClient({ collection, childrenCollections, products
   const heroTitle = formatCategory(collection.name);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="h-auto bg-white">
       <main className="flex-1">
-        <div className="border-b border-gray-200 px-4 md:px-6 lg:px-8 py-6 md:py-8">
+        <div className="hidden lg:block sticky top-[82px] z-30 bg-white/95 backdrop-blur px-4 md:px-6 lg:px-8 py-6 md:py-2 md:mb-4">
           <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
             <button
               onClick={() => setIsFilterOpen(true)}
-              className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg text-sm font-semibold text-gray-900 hover:border-gray-400 transition whitespace-nowrap"
+              className="flex items-center gap-2 lg:pr-16 px-4 py-2 border border-gray-300 rounded-3xl text-sm font-semibold text-gray-900 hover:border-gray-400 transition whitespace-nowrap"
             >
               <Sliders size={16} />
               FILTERS
@@ -149,42 +148,17 @@ export function CollectionPageClient({ collection, childrenCollections, products
 
             <div className="flex-1 text-center">
               <h1 className="text-base md:text-xl lg:text-2xl font-bold text-gray-900">
-                {heroTitle}
+            {heroTitle}
               </h1>
-              {collection.description ? (
-                <p className="mt-1 text-xs text-gray-500 uppercase tracking-[0.3em]">{collection.description}</p>
-              ) : null}
             </div>
 
-            <div className="whitespace-nowrap">
+            <div className="hidden lg:flex items-center gap-4">
               <SortDropdown sortBy={sortBy} setSortBy={setSortBy} />
             </div>
           </div>
         </div>
 
-        <div className="flex relative">
-          <div className="hidden lg:block w-80 border-r border-gray-200 bg-white sticky top-24 h-[calc(100vh-6rem)] overflow-y-auto">
-            <div className="px-6 py-6 border-b border-gray-200">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-sm font-bold uppercase tracking-[0.3em] text-gray-900">Filter by</h2>
-                {hasActiveFilters && (
-                  <button
-                    onClick={handleClearFilters}
-                    className="text-xs text-red-600 hover:text-red-700 font-semibold transition"
-                  >
-                    CLEAR ×
-                  </button>
-                )}
-              </div>
-              <div className="text-xs text-gray-500 font-semibold">₹</div>
-            </div>
-            <FilterPanel
-              filters={filters}
-              setFilters={setFilters}
-              onClear={handleClearFilters}
-              title={collection.name}
-            />
-          </div>
+        <div className="flex relative max-w-7xl mx-auto">
 
           <Sheet open={isFilterOpen} onOpenChange={setIsFilterOpen}>
             <SheetContent side="left" className="w-full max-w-sm sm:w-96 p-0 rounded-none">
@@ -215,60 +189,12 @@ export function CollectionPageClient({ collection, childrenCollections, products
             </SheetContent>
           </Sheet>
 
-          <Sheet open={isMoreCategoriesOpen} onOpenChange={setIsMoreCategoriesOpen}>
-            <SheetContent side="left" className="w-full max-w-sm sm:w-96 p-0 rounded-none">
-              <SheetHeader className="sticky top-0 z-10 bg-white border-b border-gray-200 px-6 py-4">
-                <div className="flex items-center justify-between">
-                  <SheetTitle className="text-sm font-bold uppercase tracking-[0.3em] text-gray-900">Categories</SheetTitle>
-                  <SheetClose className="p-2 hover:bg-gray-100 rounded transition" asChild>
-                    <button aria-label="Close categories sheet">
-                      <X size={20} className="text-gray-600" />
-                    </button>
-                  </SheetClose>
-                </div>
-              </SheetHeader>
-
-              <div className="overflow-y-auto h-[calc(100vh-120px)] px-6 py-4">
-                <div className="space-y-2">
-                  {allCategories.map((cat) => (
-                    <label key={cat} className="flex items-center gap-3 cursor-pointer p-3 rounded hover:bg-gray-50 transition group">
-                      <input
-                        type="checkbox"
-                        checked={filters.category.includes(cat)}
-                        onChange={(e) => {
-                          setFilters((prev) => ({
-                            ...prev,
-                            category: e.target.checked
-                              ? [...prev.category, cat]
-                              : prev.category.filter((c) => c !== cat),
-                          }));
-                        }}
-                        className="w-4 h-4 rounded border-gray-300 text-red-600 cursor-pointer"
-                      />
-                      <span className="text-sm text-gray-600 group-hover:text-gray-900 transition">{cat}</span>
-                    </label>
-                  ))}
-                </div>
-              </div>
-
-              <div className="sticky bottom-0 px-6 py-4 border-t border-gray-200 bg-white">
-                <button
-                  onClick={() => setIsMoreCategoriesOpen(false)}
-                  className="w-full px-4 py-3 bg-black text-white text-sm font-bold uppercase tracking-[0.2em] rounded transition hover:bg-gray-900"
-                >
-                  APPLY
-                </button>
-              </div>
-            </SheetContent>
-          </Sheet>
-
           <div className="flex-1">
-            <div className="hidden lg:flex items-center justify-between gap-4 border-b border-gray-200 px-6 py-4">
+            <div className="hidden lg:flex items-center justify-between gap-4 px-6 py-4">
               <FilterChips filters={filters} setFilters={setFilters} />
-              <SortDropdown sortBy={sortBy} setSortBy={setSortBy} />
             </div>
 
-            <div className="border-b border-gray-200 px-4 md:px-6 lg:px-8 py-4">
+            <div className="bg-[#f7f2e5] px-4 md:px-6 lg:px-8 py-4">
               <div className="max-w-full">
                 <h3 className="text-xs font-bold uppercase tracking-[0.3em] text-gray-900 mb-3">FILTER FOR YOU</h3>
                 <div className="flex flex-wrap gap-2">
@@ -286,7 +212,7 @@ export function CollectionPageClient({ collection, childrenCollections, products
                     </button>
                   ))}
                   <button
-                    onClick={() => setIsMoreCategoriesOpen(true)}
+                    onClick={() => setIsFilterOpen(true)}
                     className="px-3 py-1.5 text-xs font-semibold text-red-600 hover:text-red-700 transition"
                   >
                     +More
@@ -295,66 +221,63 @@ export function CollectionPageClient({ collection, childrenCollections, products
               </div>
             </div>
 
-            <div className="px-4 md:px-6 lg:px-8 py-8">
+            <div className="px-4 md:px-6 lg:px-0 py-8">
               <ProductGrid products={sortedProducts} />
-            </div>
-
-            <div className="border-t border-gray-200 bg-gray-50 px-4 md:px-6 lg:px-8 py-8">
-              <div>
-                <h3 className="text-xl md:text-2xl font-bold text-gray-900 text-center mb-6">GOT ANY SIZE/COLOR?</h3>
-                <div className="grid md:grid-cols-2 gap-8">
-                  <div>
-                    <h4 className="text-xs font-bold uppercase tracking-[0.3em] text-red-600 mb-4">SIZE</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {["XS", "S", "M", "L", "XL", "XXL"].map((size) => (
-                        <button
-                          key={size}
-                          className="px-4 py-2 border border-gray-300 text-sm font-semibold rounded hover:border-gray-400 transition"
-                        >
-                          {size}
-                        </button>
-                      ))}
-                      <button className="px-4 py-2 text-sm font-semibold text-red-600 hover:text-red-700 transition">
-                        +More
-                      </button>
-                    </div>
-                  </div>
-                  <div>
-                    <h4 className="text-xs font-bold uppercase tracking-[0.3em] text-red-600 mb-4">COLOR</h4>
-                    <div className="flex flex-wrap gap-3">
-                      {["black", "blue", "gray", "navy", "white"].map((color) => (
-                        <button
-                          key={color}
-                          className={`w-8 h-8 rounded-full border-2 border-gray-300 hover:border-gray-400 transition ${
-                            color === "black"
-                              ? "bg-black"
-                              : color === "blue"
-                              ? "bg-blue-600"
-                              : color === "gray"
-                              ? "bg-gray-400"
-                              : color === "navy"
-                              ? "bg-blue-900"
-                              : "bg-white"
-                          }`}
-                          title={color}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
 
         <div className="fixed bottom-0 left-0 right-0 z-20 grid grid-cols-2 gap-0 border-t border-gray-200 bg-white lg:hidden">
-          <button
-            onClick={() => setIsFilterOpen(true)}
-            className="flex items-center justify-center gap-2 px-4 py-4 text-sm font-bold uppercase tracking-[0.2em] text-gray-900 border-r border-gray-200 hover:bg-gray-50 transition"
-          >
-            <Settings2 size={18} />
-            SORT
-          </button>
+          <Sheet>
+            <SheetTrigger asChild >
+              <button
+                type="button"
+                className="flex items-center justify-center gap-2 px-4 py-4 text-sm font-bold uppercase tracking-[0.2em] text-gray-900 border-r border-gray-200 hover:bg-gray-50 transition"
+              >
+                <Settings2 size={18} />
+                SORT
+              </button>
+            </SheetTrigger>
+
+            <SheetContent side="bottom" className="max-h-[70vh] rounded-t-2xl px-6 pb-8 pt-4">
+              <SheetHeader className="text-left pb-4">
+                <SheetTitle className="text-sm font-bold uppercase tracking-[0.3em] text-gray-900 sr-only">
+                  Sort By
+                </SheetTitle>
+                <SheetDescription className="sr-only">
+                  Choose how products are ordered in the list below.
+                </SheetDescription>
+              </SheetHeader>
+
+              <div className="flex flex-col divide-y divide-gray-100">
+                {[
+                  { label: "Featured", value: "featured" },
+                  { label: "Price: Low to High", value: "price-low" },
+                  { label: "Price: High to Low", value: "price-high" },
+                  { label: "Alphabetical A-Z", value: "a-z" },
+                  { label: "Alphabetical Z-A", value: "z-a" },
+                  { label: "Newest First", value: "newest" },
+                ].map((option) => (
+                  <SheetClose asChild key={option.value}>
+                    <button
+                      type="button"
+                      onClick={() => setSortBy(option.value)}
+                      className={`flex items-center justify-between py-3 text-sm font-semibold uppercase tracking-[0.2em] transition ${
+                        sortBy === option.value ? "text-red-600" : "text-gray-900 hover:text-red-600"
+                      }`}
+                    >
+                      {option.label}
+                      <span
+                        className={`h-2 w-2 rounded-full ${
+                          sortBy === option.value ? "bg-red-600" : "border border-gray-300"
+                        }`}
+                      />
+                    </button>
+                  </SheetClose>
+                ))}
+              </div>
+            </SheetContent>
+          </Sheet>
           <button
             onClick={() => setIsFilterOpen(true)}
             className="flex items-center justify-center gap-2 px-4 py-4 text-sm font-bold uppercase tracking-[0.2em] text-gray-900 hover:bg-gray-50 transition"
@@ -364,10 +287,6 @@ export function CollectionPageClient({ collection, childrenCollections, products
           </button>
         </div>
       </main>
-
-      <div className="h-20 lg:h-0" />
-
-      <Footer />
     </div>
   );
 }

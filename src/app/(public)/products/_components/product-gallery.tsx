@@ -28,7 +28,7 @@ const ProductGallery = ({ title, images }: ProductGalleryProps) => {
             fill
             sizes="(max-width: 768px) 85vw, 40vw"
             className="object-cover"
-            priority
+            loading="eager"
           />
         ) : (
           <div className={cn("flex h-full w-full items-center justify-center", FALLBACK_GRADIENT)}>

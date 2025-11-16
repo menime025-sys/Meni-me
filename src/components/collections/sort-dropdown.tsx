@@ -27,16 +27,19 @@ export function SortDropdown({ sortBy, setSortBy }: SortDropdownProps) {
 
   return (
     <div className="relative">
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded text-sm font-semibold text-gray-900 hover:border-gray-400 transition whitespace-nowrap"
-      >
-        Sort By: {displayLabel}
-        <ChevronDown
-          size={16}
-          className={`transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
-        />
-      </button>
+    <button
+      onClick={() => setIsOpen(!isOpen)}
+      className="flex items-center gap-1 px-4 py-2 border border-gray-300 rounded-3xl text-sm font-semibold text-gray-900 hover:border-gray-400 transition whitespace-nowrap"
+    >
+      Sort By:{' '}
+      <span className="w-24 truncate text-left" title={currentLabel}>
+        {currentLabel}
+      </span>
+      <ChevronDown
+        size={16}
+        className={`transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
+      />
+    </button>
 
       {isOpen && (
         <div className="absolute right-0 top-full mt-2 w-56 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
