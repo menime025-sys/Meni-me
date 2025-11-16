@@ -36,7 +36,11 @@ type AdminReportSummary = {
     shippingFee: number | null;
     tax: number | null;
     total: number;
-    [key: string]: unknown;
+    user: {
+      id: string;
+      name: string | null;
+      email: string | null;
+    } | null;
   }>;
   orderTotals: {
     quantity: number;
