@@ -9,8 +9,8 @@ export default function Footer() {
   const sections = [
     {
       id: 'about',
-      title: 'MORE ABOUT LEVIS INDIA STORE',
-      content: 'Discover the world of Levi\'s, a brand synonymous with quality denim and timeless style since 1873. From iconic jeans to comfortable casual wear, Levi\'s India offers premium products for every lifestyle.'
+      title: 'MORE ABOUT MENI ME INDIA STORE',
+      content: 'Discover the world of Meni Me, a brand synonymous with quality denim and timeless style since 1873. From iconic jeans to comfortable casual wear, Meni Me India offers premium products for every lifestyle.'
     },
     {
       id: 'quick',
@@ -26,8 +26,8 @@ export default function Footer() {
       id: 'contact',
       title: 'CONTACT',
       contactItems: [
-        { label: 'For Customer care', value: 'customercare@levi.in', type: 'email' },
-        { label: 'For Order Escalation', value: 'feedbacklevi@levi.in', type: 'email' },
+        { label: 'For Customer care', value: 'customercare@menime.in', type: 'email' },
+        { label: 'For Order Escalation', value: 'feedbackmenime@menime.in', type: 'email' },
         { label: 'For Online Orders', value: '1800-123-584', type: 'phone' },
         { label: 'For Store Queries', value: '1800-1020-501', type: 'phone' },
         { label: 'Call Timings', value: 'Mon-Sat : 10AM - 6PM', type: 'text' }
@@ -243,7 +243,7 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="text-xs text-gray-600 text-center md:text-left">
             <p>
-              © 2025, Levi&apos;s India Store
+              © 2025, Meni Me India Store
               {' '}
               <a href="#" className="hover:text-black underline mx-2">Privacy Policy</a>
               <a href="#" className="hover:text-black underline mx-2">Terms of use</a>

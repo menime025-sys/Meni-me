@@ -487,7 +487,7 @@ export const Navbar = ({
                     />
                   </div>
                   <span className="text-[10px] font-bold text-gray-900 uppercase tracking-[0.15em]">
-                    Mani-Me
+                    Meni Me
                   </span>
                 </div>
                 <SheetClose />
