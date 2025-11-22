@@ -374,7 +374,7 @@ export const Navbar = ({
       return (
         <div className="flex flex-col gap-2 p-4 text-sm">
           <p className="text-xs uppercase tracking-[0.3em] text-gray-400">
-            Welcome to Levi&apos;s
+            Welcome to Meni Me&apos;s
           </p>
           <Link
             href="/sign-in"
