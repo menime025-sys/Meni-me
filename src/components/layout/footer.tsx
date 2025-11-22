@@ -102,7 +102,7 @@ export default function Footer() {
 
         {/* Copyright and socials for mobile */}
         <div className="pt-6 space-y-4 text-center">
-          <p className="text-xs text-gray-600">© 2025, Levis India Store</p>
+          <p className="text-xs text-gray-600">© 2025, Meni Me India Store</p>
           <div className="flex gap-4 justify-center">
             <Link href="#" className="text-gray-600 hover:text-gray-900 transition">
               <Facebook className="w-4 h-4" />
@@ -121,11 +121,11 @@ export default function Footer() {
       <div className="hidden md:block max-w-7xl mx-auto md:py-2 md:px-4">
         <details className="group border-b border-gray-200 pb-1">
           <summary className="flex items-center justify-between cursor-pointer py-4 select-none">
-            <h3 className="text-sm font-bold uppercase tracking-[0.3em] text-gray-900">More About Levi&rsquo;s India Store</h3>
+            <h3 className="text-sm font-bold uppercase tracking-[0.3em] text-gray-900">More About Meni&rsquo;s India Store</h3>
             <ChevronDown className="w-5 h-5 text-gray-600 group-open:rotate-180 transition-transform" />
           </summary>
           <p className="text-gray-600 text-sm leading-relaxed pb-4">
-            Discover the world of Levi&rsquo;s, a brand synonymous with quality denim and timeless style since 1873. From iconic jeans to comfortable casual wear, Levi&rsquo;s India offers premium products for every lifestyle.
+            Discover the world of Meni Me&rsquo;s, a brand synonymous with quality denim and timeless style since 1873. From iconic jeans to comfortable casual wear, Meni Me&rsquo;s India offers premium products for every lifestyle.
           </p>
         </details>
 
@@ -184,14 +184,14 @@ export default function Footer() {
             <div className="space-y-2">
               <div>
                 <p className="text-xs font-semibold text-black -mb-1">For Customer Care</p>
-                <a href="mailto:customercare@levi.in" className="text-sm text-gray-600 hover:text-black transition-colors">
-                  customercare@levi.in
+                <a href="mailto:customercare@Meni Me.in" className="text-sm text-gray-600 hover:text-black transition-colors">
+                  customercare@Meni Me.in
                 </a>
               </div>
               <div>
                 <p className="text-xs font-semibold text-black -mb-1">For Order Escalation</p>
-                <a href="mailto:feedbacklevi@levi.in" className="text-sm text-gray-600 hover:text-black transition-colors">
-                  feedbacklevi@levi.in
+                <a href="mailto:feedbackMeni Me@Meni Me.in" className="text-sm text-gray-600 hover:text-black transition-colors">
+                  feedbackMeni Me@Meni Me.in
                 </a>
               </div>
               <div>
