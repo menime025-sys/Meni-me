@@ -39,9 +39,9 @@ export default function Footer() {
       links: ["About Us", "Careers", "Press", "Blog"]
     },
     {
-      id: 'perks',
-      title: 'ITS ALL ABOUT THE PERKS',
-      isPerks: true
+      id: 'Meni Me',
+      title: 'ITS ALL ABOUT THE Meni Me',
+      isMeni Me: true
     }
   ];
 
@@ -58,7 +58,7 @@ export default function Footer() {
               <ChevronDown className="w-4 h-4 text-gray-600 group-open:rotate-180 transition-transform" />
             </summary>
             <div className="pb-4 space-y-3">
-              {section.isPerks ? (
+              {section.isMeni Me ? (
                 <div className="space-y-4">
                   <input
                     type="email"
@@ -216,7 +216,7 @@ export default function Footer() {
           {/* Newsletter Section */}
           <div>
             <h3 className="text-sm font-bold text-black mb-2 uppercase tracking-wide">
-              It&apos;s All About The Perks
+              It&apos;s All About The Meni Me
             </h3>
             <form className="lg:space-y-4 md:space-y-2">
               <input
